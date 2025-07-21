@@ -13,60 +13,90 @@
     }
     label {
       display: block;
-      margin-top: 15px;
+      margin-top: 12px;
       font-weight: bold;
     }
-    input, select {
+    input[type="text"],
+    input[type="tel"],
+    select {
       width: 100%;
       padding: 8px;
-      margin-top: 5px;
+      margin-top: 4px;
     }
-    button {
-      margin-top: 20px;
-      padding: 10px;
-      width: 100%;
-      background-color: #ffcc00;
-      border: none;
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .quantity-control-button {
+      padding: 6px 12px;
+      font-size: 18px;
+    }
+    #quantityInput {
+      width: 50px;
+      text-align: center;
+    }
+    .submit-button {
+      margin-top: 24px;
+      padding: 10px 20px;
       font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <h1>📦 老黃在日雜貨店 - 下單表</h1>
-  <form action="https://docs.google.com/forms/d/e/1FAIpQLSd7d8RtGaXxxxxxxXXXXXXX/formResponse" method="POST" target="_blank">
-    <label>商品名稱（加上編號）</label>
-    <input name="entry.1234567890" type="text" required>
+  <h1>🛒 老黃在日雜貨店 - 下單表單</h1>
+  <form action="https://docs.google.com/forms/d/e/你自己的表單代碼/formResponse" method="POST" target="_blank">
 
-    <label>數量（1~9）</label>
-    <input name="entry.9876543210" type="number" min="1" max="9" required>
+    <label>商品名稱或編號</label>
+    <input name="entry.商品編號" type="text" required>
 
-    <label>郵遞區號</label>
-    <input name="entry.1111111111" type="text" required>
-
-    <label>地址</label>
-    <input name="entry.2222222222" type="text" required>
+    <label>數量</label>
+    <div class="quantity-control">
+      <button type="button" class="quantity-control-button" onclick="decreaseQuantity()">－</button>
+      <input type="number" name="entry.商品數量" id="quantityInput" value="1" min="1" max="9" readonly>
+      <button type="button" class="quantity-control-button" onclick="increaseQuantity()">＋</button>
+    </div>
 
     <label>收件人姓名</label>
-    <input name="entry.3333333333" type="text" required>
+    <input name="entry.收件人姓名" type="text" required>
 
     <label>電話</label>
-    <input name="entry.4444444444" type="tel" required>
-
-    <label>付款方式</label>
-    <select name="entry.5555555555">
-      <option>銀行轉帳</option>
-      <option>LINE PAY</option>
-      <option>其他</option>
-    </select>
+    <input name="entry.電話" type="tel" required>
 
     <label>配送方式</label>
-    <select name="entry.6666666666">
-      <option>黑貓宅配</option>
-      <option>日本郵便</option>
-      <option>東京／埼玉自取</option>
+    <select name="entry.配送方式" required>
+      <option value="">請選擇</option>
+      <option value="黑貓宅配">黑貓宅配</option>
+      <option value="郵局配送">郵局配送</option>
+      <option value="自取（東京／埼玉）">自取（東京／埼玉）</option>
     </select>
 
-    <button type="submit">✅ 送出下單</button>
+    <label>付款方式</label>
+    <select name="entry.付款方式" required>
+      <option value="">請選擇</option>
+      <option value="LINE PAY">LINE PAY</option>
+      <option value="銀行轉帳">銀行轉帳</option>
+      <option value="現場付款">現場付款</option>
+    </select>
+
+    <button class="submit-button" type="submit">✅ 送出訂單</button>
   </form>
+
+  <script>
+    function increaseQuantity() {
+      const input = document.getElementById('quantityInput');
+      if (parseInt(input.value) < 9) {
+        input.value = parseInt(input.value) + 1;
+      }
+    }
+
+    function decreaseQuantity() {
+      const input = document.getElementById('quantityInput');
+      if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+      }
+    }
+  </script>
 </body>
 </html>
