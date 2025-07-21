@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>老黃在日雜貨店 - 下單表單</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      background-color: #ffcc00;
+      border: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📦 老黃在日雜貨店 - 下單表</h1>
+  <form action="https://docs.google.com/forms/d/e/1FAIpQLSd7d8RtGaXxxxxxxXXXXXXX/formResponse" method="POST" target="_blank">
+    <label>商品名稱（加上編號）</label>
+    <input name="entry.1234567890" type="text" required>
+
+    <label>數量（1~9）</label>
+    <input name="entry.9876543210" type="number" min="1" max="9" required>
+
+    <label>郵遞區號</label>
+    <input name="entry.1111111111" type="text" required>
+
+    <label>地址</label>
+    <input name="entry.2222222222" type="text" required>
+
+    <label>收件人姓名</label>
+    <input name="entry.3333333333" type="text" required>
+
+    <label>電話</label>
+    <input name="entry.4444444444" type="tel" required>
+
+    <label>付款方式</label>
+    <select name="entry.5555555555">
+      <option>銀行轉帳</option>
+      <option>LINE PAY</option>
+      <option>其他</option>
+    </select>
+
+    <label>配送方式</label>
+    <select name="entry.6666666666">
+      <option>黑貓宅配</option>
+      <option>日本郵便</option>
+      <option>東京／埼玉自取</option>
+    </select>
+
+    <button type="submit">✅ 送出下單</button>
+  </form>
+</body>
+</html>
