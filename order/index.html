@@ -1,16 +1,94 @@
+
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>老黃接單表</title>
+  <title>老黃接單表單</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    h1 { font-size: 24px; }
+    form { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input[type="text"], input[type="tel"], textarea, select {
+      width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;
+    }
+    .quantity-container {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .quantity-container button {
+      width: 32px; height: 32px; font-size: 18px;
+    }
+    .quantity-container input {
+      width: 50px; text-align: center;
+    }
+    button[type="submit"] {
+      margin-top: 20px; background: #007BFF; color: white; border: none; padding: 10px 20px;
+      font-size: 16px; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+  <script>
+    function changeQuantity(delta) {
+      const qtyInput = document.getElementById("quantity");
+      let val = parseInt(qtyInput.value || 1);
+      val += delta;
+      if (val < 1) val = 1;
+      if (val > 9) val = 9;
+      qtyInput.value = val;
+    }
+  </script>
 </head>
 <body>
-  <h2>📋 老黃接單表單</h2>
-  <iframe 
-    src="https://docs.google.com/forms/d/e/1FAIpQLSdG_FCpcR3ZhMoW3bi26wUz7DdX8SY7SuQUt5UOyeqHvSOWcA/viewform?embedded=true" 
-    width="100%" height="1600" frameborder="0" marginheight="0" marginwidth="0">
-    載入中…
-  </iframe>
+  <h1>📋 老黃接單表單</h1>
+  <form action="mailto:huang1031044@gmail.com" method="post" enctype="text/plain">
+    <label>1. 商品名、また商品番号
+      <input type="text" name="商品名" required />
+    </label>
+
+    <label>2. 数量（1～9）
+      <div class="quantity-container">
+        <button type="button" onclick="changeQuantity(-1)">－</button>
+        <input type="text" name="数量" id="quantity" value="1" />
+        <button type="button" onclick="changeQuantity(1)">＋</button>
+      </div>
+    </label>
+
+    <label>3. 受取人の名前
+      <input type="text" name="受取人の名前" required />
+    </label>
+
+    <label>4. 連絡先（LINE ID または電話）
+      <input type="tel" name="連絡先" required />
+    </label>
+
+    <label>5. 郵便番号（例：123-4567）
+      <input type="text" name="郵便番号" pattern="\d{3}-\d{4}" placeholder="123-4567" required />
+    </label>
+
+    <label>6. 住所
+      <input type="text" name="住所" required />
+    </label>
+
+    <label>7. 配送方法
+      <select name="配送方法">
+        <option value="黑貓宅急便">黑貓宅急便</option>
+        <option value="日本郵便">日本郵便</option>
+        <option value="自取">自取</option>
+      </select>
+    </label>
+
+    <label>8. 支払方法
+      <select name="支払方法">
+        <option value="現金">現金</option>
+        <option value="PayPay">PayPay</option>
+      </select>
+    </label>
+
+    <label>9. 備考（任意）
+      <textarea name="備考" rows="3"></textarea>
+    </label>
+
+    <button type="submit">送信</button>
+  </form>
 </body>
 </html>
