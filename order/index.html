@@ -1,94 +1,117 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>老黃接單表單</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
-    h1 { font-size: 24px; }
-    form { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    input[type="text"], input[type="tel"], textarea, select {
-      width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;
+    body {
+      font-family: "Helvetica", "Arial", sans-serif;
+      padding: 2em;
+      background-color: #f8f8f8;
     }
-    .quantity-container {
-      display: flex; align-items: center; gap: 10px;
+    h1 {
+      text-align: center;
     }
-    .quantity-container button {
-      width: 32px; height: 32px; font-size: 18px;
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .quantity-container input {
-      width: 50px; text-align: center;
+    label {
+      display: block;
+      margin-top: 1em;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7em;
+      margin-top: 0.3em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    .qty-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .qty-buttons button {
+      padding: 0.3em 1em;
+      font-size: 1.2em;
     }
     button[type="submit"] {
-      margin-top: 20px; background: #007BFF; color: white; border: none; padding: 10px 20px;
-      font-size: 16px; border-radius: 4px; cursor: pointer;
+      margin-top: 2em;
+      padding: 1em;
+      font-size: 1.2em;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background-color: #0056b3;
     }
   </style>
-  <script>
-    function changeQuantity(delta) {
-      const qtyInput = document.getElementById("quantity");
-      let val = parseInt(qtyInput.value || 1);
-      val += delta;
-      if (val < 1) val = 1;
-      if (val > 9) val = 9;
-      qtyInput.value = val;
-    }
-  </script>
 </head>
 <body>
-  <h1>📋 老黃接單表單</h1>
+  <h1>老黃接單表單</h1>
   <form action="mailto:huang1031044@gmail.com" method="post" enctype="text/plain">
-    <label>1. 商品名、また商品番号
-      <input type="text" name="商品名" required />
-    </label>
+    <label>1. 商品名稱（請輸入編號＋名稱）</label>
+    <input type="text" name="商品名稱" required>
 
-    <label>2. 数量（1～9）
-      <div class="quantity-container">
-        <button type="button" onclick="changeQuantity(-1)">－</button>
-        <input type="text" name="数量" id="quantity" value="1" />
-        <button type="button" onclick="changeQuantity(1)">＋</button>
-      </div>
-    </label>
+    <label>2. 數量</label>
+    <div class="qty-buttons">
+      <button type="button" onclick="adjustQty(-1)">−</button>
+      <input type="number" id="qty" name="數量" value="1" min="1" max="9" readonly>
+      <button type="button" onclick="adjustQty(1)">＋</button>
+    </div>
 
-    <label>3. 受取人の名前
-      <input type="text" name="受取人の名前" required />
-    </label>
+    <label>3. 收件人姓名（請用日文全名）</label>
+    <input type="text" name="姓名" required>
 
-    <label>4. 連絡先（LINE ID または電話）
-      <input type="tel" name="連絡先" required />
-    </label>
+    <label>4. 連絡方式（LINE ID 或 電話）</label>
+    <input type="text" name="連絡方式" required>
 
-    <label>5. 郵便番号（例：123-4567）
-      <input type="text" name="郵便番号" pattern="\d{3}-\d{4}" placeholder="123-4567" required />
-    </label>
+    <label>5. 郵便番号（例：123-4567）</label>
+    <input type="text" name="郵遞區號" required>
 
-    <label>6. 住所
-      <input type="text" name="住所" required />
-    </label>
+    <label>6. 住所</label>
+    <input type="text" name="地址" required>
 
-    <label>7. 配送方法
-      <select name="配送方法">
-        <option value="黑貓宅急便">黑貓宅急便</option>
-        <option value="日本郵便">日本郵便</option>
-        <option value="自取">自取</option>
-      </select>
-    </label>
+    <label>7. 配送方法</label>
+    <select name="配送方法">
+      <option value="黑貓宅急便">黑貓宅急便</option>
+      <option value="日本郵便">日本郵便</option>
+      <option value="東京自取">東京自取</option>
+      <option value="埼玉自取">埼玉自取</option>
+    </select>
 
-    <label>8. 支払方法
-      <select name="支払方法">
-        <option value="現金">現金</option>
-        <option value="PayPay">PayPay</option>
-      </select>
-    </label>
+    <label>8. 支払方法</label>
+    <select name="付款方式">
+      <option value="現金">現金</option>
+      <option value="PayPay">PayPay</option>
+      <option value="振り込み">振り込み</option>
+    </select>
 
-    <label>9. 備考（任意）
-      <textarea name="備考" rows="3"></textarea>
-    </label>
+    <label>9. 備註</label>
+    <textarea name="備註"></textarea>
 
-    <button type="submit">送信</button>
+    <button type="submit">送出表單</button>
   </form>
+
+  <script>
+    function adjustQty(change) {
+      const qtyInput = document.getElementById("qty");
+      let current = parseInt(qtyInput.value);
+      current = isNaN(current) ? 1 : current;
+      current += change;
+      if (current < 1) current = 1;
+      if (current > 9) current = 9;
+      qtyInput.value = current;
+    }
+  </script>
 </body>
 </html>
