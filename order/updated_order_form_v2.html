@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>老黃接單表單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    form { max-width: 500px; margin: auto; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, select, textarea {
+      width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;
+    }
+    .quantity-control {
+      display: flex;
+      align-items: center;
+    }
+    .quantity-control button {
+      width: 32px;
+      height: 32px;
+    }
+    .quantity-control input {
+      width: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>老黃接單表單</h2>
+  <form action="https://formspree.io/f/xoqgzzvo" method="POST">
+    <label>商品名稱與編號</label>
+    <input type="text" name="item" required />
+
+    <label>數量</label>
+    <div class="quantity-control">
+      <button type="button" onclick="changeQty(-1)">-</button>
+      <input type="number" name="quantity" id="qty" value="1" min="1" max="9" readonly />
+      <button type="button" onclick="changeQty(1)">+</button>
+    </div>
+
+    <label>收件人姓名</label>
+    <input type="text" name="name" required />
+
+    <label>聯絡電話</label>
+    <input type="tel" name="phone" required />
+
+    <label>郵遞區號（前3碼）</label>
+    <input type="text" name="zip1" maxlength="3" pattern="\d{3}" required />
+    <label>郵遞區號（後4碼）</label>
+    <input type="text" name="zip2" maxlength="4" pattern="\d{4}" required />
+
+    <label>地址</label>
+    <textarea name="address" rows="2" required></textarea>
+
+    <label>配送方式</label>
+    <select name="delivery" required>
+      <option value="">請選擇</option>
+      <option value="黑貓宅配">黑貓宅配</option>
+      <option value="郵局配送">郵局配送</option>
+      <option value="東京自取">東京自取</option>
+      <option value="埼玉自取">埼玉自取</option>
+    </select>
+
+    <label>付款方式</label>
+    <select name="payment" required>
+      <option value="">請選擇</option>
+      <option value="轉帳">轉帳</option>
+      <option value="現金">現金</option>
+      <option value="PayPay">PayPay</option>
+    </select>
+
+    <label>備註</label>
+    <textarea name="note" rows="3"></textarea>
+
+    <button type="submit" style="margin-top: 20px;">發送表單</button>
+  </form>
+
+  <script>
+    function changeQty(val) {
+      const qtyInput = document.getElementById('qty');
+      let current = parseInt(qtyInput.value);
+      if (!isNaN(current)) {
+        let next = current + val;
+        if (next >= 1 && next <= 9) qtyInput.value = next;
+      }
+    }
+  </script>
+</body>
+</html>
