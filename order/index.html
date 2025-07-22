@@ -1,117 +1,61 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>老黃接單表單</title>
-  <style>
-    body {
-      font-family: "Helvetica", "Arial", sans-serif;
-      padding: 2em;
-      background-color: #f8f8f8;
-    }
-    h1 {
-      text-align: center;
-    }
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 2em;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin-top: 1em;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.7em;
-      margin-top: 0.3em;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-    }
-    .qty-buttons {
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-    }
-    .qty-buttons button {
-      padding: 0.3em 1em;
-      font-size: 1.2em;
-    }
-    button[type="submit"] {
-      margin-top: 2em;
-      padding: 1em;
-      font-size: 1.2em;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button[type="submit"]:hover {
-      background-color: #0056b3;
-    }
-  </style>
-</head>
-<body>
-  <h1>老黃接單表單</h1>
-  <form action="mailto:huang1031044@gmail.com" method="post" enctype="text/plain">
-    <label>1. 商品名稱（請輸入編號＋名稱）</label>
-    <input type="text" name="商品名稱" required>
+<form id="orderForm">
+  <label>商品名稱（編號）<br><input type="text" name="item_name" required></label><br><br>
+  
+  <label>數量<br>
+    <button type="button" onclick="changeQty(-1)">－</button>
+    <input type="number" name="qty" id="qty" value="1" min="1" max="9" readonly>
+    <button type="button" onclick="changeQty(1)">＋</button>
+  </label><br><br>
 
-    <label>2. 數量</label>
-    <div class="qty-buttons">
-      <button type="button" onclick="adjustQty(-1)">−</button>
-      <input type="number" id="qty" name="數量" value="1" min="1" max="9" readonly>
-      <button type="button" onclick="adjustQty(1)">＋</button>
-    </div>
+  <label>郵遞區號<br>
+    <input type="text" name="zip1" size="3" maxlength="3" required> － 
+    <input type="text" name="zip2" size="4" maxlength="4" required>
+  </label><br><br>
 
-    <label>3. 收件人姓名（請用日文全名）</label>
-    <input type="text" name="姓名" required>
-
-    <label>4. 連絡方式（LINE ID 或 電話）</label>
-    <input type="text" name="連絡方式" required>
-
-    <label>5. 郵便番号（例：123-4567）</label>
-    <input type="text" name="郵遞區號" required>
-
-    <label>6. 住所</label>
-    <input type="text" name="地址" required>
-
-    <label>7. 配送方法</label>
-    <select name="配送方法">
-      <option value="黑貓宅急便">黑貓宅急便</option>
-      <option value="日本郵便">日本郵便</option>
-      <option value="東京自取">東京自取</option>
-      <option value="埼玉自取">埼玉自取</option>
+  <label>配送方式<br>
+    <select name="delivery" required>
+      <option value="">請選擇</option>
+      <option value="黑貓宅配">黑貓宅配</option>
+      <option value="郵局">郵局</option>
+      <option value="東京／埼玉自取">東京／埼玉自取</option>
     </select>
+  </label><br><br>
 
-    <label>8. 支払方法</label>
-    <select name="付款方式">
-      <option value="現金">現金</option>
+  <label>付款方式<br>
+    <select name="payment" required>
+      <option value="">請選擇</option>
+      <option value="轉帳">轉帳</option>
       <option value="PayPay">PayPay</option>
-      <option value="振り込み">振り込み</option>
     </select>
+  </label><br><br>
 
-    <label>9. 備註</label>
-    <textarea name="備註"></textarea>
+  <label>收件人（日文）<br><input type="text" name="recipient_name" required></label><br><br>
+  <label>聯絡電話或LINE ID<br><input type="text" name="contact" required></label><br><br>
+  <label>備註<br><textarea name="note" rows="3"></textarea></label><br><br>
 
-    <button type="submit">送出表單</button>
-  </form>
+  <button type="submit">送出訂單</button>
+</form>
 
-  <script>
-    function adjustQty(change) {
-      const qtyInput = document.getElementById("qty");
-      let current = parseInt(qtyInput.value);
-      current = isNaN(current) ? 1 : current;
-      current += change;
-      if (current < 1) current = 1;
-      if (current > 9) current = 9;
-      qtyInput.value = current;
-    }
-  </script>
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script>
+  emailjs.init("AoXLN9FqsrfZkmmKr"); // 你的 Public Key
+
+  function changeQty(n) {
+    let qty = document.getElementById("qty");
+    let val = parseInt(qty.value) + n;
+    if (val >= 1 && val <= 9) qty.value = val;
+  }
+
+  document.getElementById("orderForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    emailjs.sendForm("service_nbs0ejc", "template_nanaorder", this)
+      .then(() => {
+        alert("訂單已送出！我們將儘快與您聯繫。");
+        this.reset();
+        document.getElementById("qty").value = 1;
+      }, (error) => {
+        alert("送出失敗，請再試一次。");
+        console.log(error);
+      });
+  });
+</script>
