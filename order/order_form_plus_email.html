@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>老黃接單表單</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; line-height: 1.6; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; font-size: 1em; }
+    .quantity-control { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+    .quantity-control button { width: 30px; height: 30px; font-size: 1.2em; }
+    #submitBtn { margin-top: 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>📋 老黃接單表單</h2>
+  <form id="orderForm">
+    <label>1. 商品名、また商品番号
+      <input type="text" name="商品名" required />
+    </label>
+
+    <label>2. 数量（1〜9）</label>
+    <div class="quantity-control">
+      <button type="button" onclick="changeQuantity(-1)">−</button>
+      <input type="number" id="quantity" name="数量" value="1" min="1" max="9" readonly />
+      <button type="button" onclick="changeQuantity(1)">＋</button>
+    </div>
+
+    <label>3. 受取人の名前
+      <input type="text" name="受取人の名前" required />
+    </label>
+
+    <label>4. 連絡先（LINE ID または電話）
+      <input type="text" name="連絡先" required />
+    </label>
+
+    <label>5. 郵便番号（例：123-4567）
+      <input type="text" name="郵便番号" pattern="\d{3}-\d{4}" required placeholder="123-4567" />
+    </label>
+
+    <label>6. 住所
+      <input type="text" name="住所" required />
+    </label>
+
+    <label>7. 配送方法
+      <select name="配送方法">
+        <option value="黑貓宅急便">黑貓宅急便</option>
+        <option value="日本郵便">日本郵便</option>
+        <option value="東京/埼玉自取">東京/埼玉自取</option>
+      </select>
+    </label>
+
+    <label>8. 支払方法
+      <select name="支払方法">
+        <option value="現金">現金</option>
+        <option value="PayPay">PayPay</option>
+        <option value="振り込み">振り込み</option>
+      </select>
+    </label>
+
+    <label>9. 備考（任意）
+      <textarea name="備考"></textarea>
+    </label>
+
+    <button id="submitBtn" type="submit">送信</button>
+  </form>
+
+  <script>
+    function changeQuantity(amount) {
+      const input = document.getElementById('quantity');
+      let current = parseInt(input.value);
+      if (!isNaN(current)) {
+        const newVal = current + amount;
+        if (newVal >= 1 && newVal <= 9) {
+          input.value = newVal;
+        }
+      }
+    }
+
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      let body = '';
+      for (const [key, value] of formData.entries()) {
+        body += `${key}: ${value}
+`;
+      }
+
+      const mailtoLink = `mailto:huang1031044@gmail.com?subject=老黃接單表單&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+    });
+  </script>
+</body>
+</html>
