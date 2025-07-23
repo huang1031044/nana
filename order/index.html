@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>黃の雑貨店注文書</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>黃の雑貨店注文書</h2>
-  <form id="order-form">
+  <h1>黃の雑貨店注文書</h1>
+  <form id="orderForm">
     <label>商品名また商品番号</label>
-    <input type="text" name="product" required />
+    <input type="text" name="product" required>
 
     <label>数量</label>
-    <div class="quantity-group">
-      <button type="button" onclick="decreaseQuantity()">－</button>
-      <input type="number" name="quantity" id="quantity" value="1" min="1" max="9" readonly />
-      <button type="button" onclick="increaseQuantity()">＋</button>
+    <div class="quantity-field">
+      <button type="button" onclick="changeQuantity(-1)">－</button>
+      <input type="number" name="quantity" value="1" min="1" max="9" readonly>
+      <button type="button" onclick="changeQuantity(1)">＋</button>
     </div>
 
     <label>お名前</label>
-    <input type="text" name="name" required />
+    <input type="text" name="name" required>
 
     <label>電話番号</label>
-    <input type="text" name="phone" />
+    <input type="tel" name="phone">
 
     <label>郵便番号</label>
-    <input type="text" name="zipcode" />
+    <input type="text" name="zipcode">
 
     <label>住所</label>
-    <input type="text" name="address" />
+    <input type="text" name="address">
 
     <label>配送方法</label>
     <select name="delivery">
       <option value="東京また埼玉で手渡">東京また埼玉で手渡</option>
-      <option value="宅急便">宅急便</option>
+      <option value="黒猫宅急便">黒猫宅急便</option>
       <option value="日本郵便局">日本郵便局</option>
     </select>
 
@@ -46,7 +46,7 @@
     </select>
 
     <label>備考</label>
-    <input type="text" name="note" />
+    <input type="text" name="note">
 
     <button type="submit">送信</button>
   </form>
