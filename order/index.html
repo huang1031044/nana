@@ -3,78 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>黄の雑貨店注文書</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-
-    .quantity-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .quantity-group button {
-      padding: 8px 15px;
-      font-size: 16px;
-    }
-
-    .quantity-group input {
-      width: 50px;
-      text-align: center;
-    }
-
-    button[type="submit"] {
-      margin-top: 30px;
-      font-size: 18px;
-      padding: 15px;
-      width: 100%;
-      background-color: #f1c40f;
-      border: none;
-      cursor: pointer;
-    }
-
-    button[type="submit"]:hover {
-      background-color: #e0b90e;
-    }
-  </style>
+  <title>黃の雑貨店注文書</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>黄の雑貨店注文書</h1>
+  <h2>黃の雑貨店注文書</h2>
   <form id="order-form">
-    <label>商品名 また 商品番号</label>
+    <label>商品名また商品番号</label>
     <input type="text" name="product" required />
 
     <label>数量</label>
     <div class="quantity-group">
-      <button type="button" onclick="changeQuantity(-1)">−</button>
+      <button type="button" onclick="decreaseQuantity()">－</button>
       <input type="number" name="quantity" id="quantity" value="1" min="1" max="9" readonly />
-      <button type="button" onclick="changeQuantity(1)">＋</button>
+      <button type="button" onclick="increaseQuantity()">＋</button>
     </div>
 
     <label>お名前</label>
@@ -84,7 +26,7 @@
     <input type="text" name="phone" />
 
     <label>郵便番号</label>
-    <input type="text" name="zip" />
+    <input type="text" name="zipcode" />
 
     <label>住所</label>
     <input type="text" name="address" />
@@ -104,38 +46,12 @@
     </select>
 
     <label>備考</label>
-    <textarea name="note" rows="4"></textarea>
+    <input type="text" name="note" />
 
     <button type="submit">送信</button>
   </form>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script>
-    function changeQuantity(amount) {
-      const input = document.getElementById("quantity");
-      let val = parseInt(input.value) + amount;
-      if (val < 1) val = 1;
-      if (val > 9) val = 9;
-      input.value = val;
-    }
-
-    (function(){
-      emailjs.init("AoXLN9FqsrfZkmmKr"); // 你的 Public Key
-    })();
-
-    document.getElementById('order-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      emailjs.sendForm('service_nbs0ejc', 'template_d6a5onc', this)
-        .then(function() {
-          alert('送出成功！已寄出訂單通知');
-          document.getElementById('order-form').reset();
-          document.getElementById('quantity').value = 1;
-        }, function(error) {
-          alert('送出失敗，請稍後再試');
-          console.error(error);
-        });
-    });
-  </script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
