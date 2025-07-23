@@ -1,59 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>老黃在日雜貨店 - ご注文フォーム</title>
-  <style>
-    body { font-family: "Noto Sans JP", sans-serif; padding: 20px; background-color: #f9f9f9; }
-    h1 { color: #333; }
-    form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
-    button { margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #0056b3; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>老黃在日雜貨店 接單表單</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>老黃在日雜貨店 ご注文フォーム</h1>
-  <form action="https://docs.google.com/forms/d/e/1FAIpQLScBpthQQbIqzZUaweBTkbDcOfNwg1dpP1LBjsY7TssvzpqTxA/formResponse" method="post" target="_self">
+  <form id="order-form">
+    <h2>📦 老黃在日雜貨店 接單表單</h2>
 
-    <label>商品名、また商品番号：</label>
-    <input name="entry.1234567890" required>
+    <label for="product">商品名、また商品番号：</label>
+    <input type="text" id="product" name="商品名" required />
 
-    <label>数量：</label>
-    <input type="number" name="entry.1111111111" min="1" max="9" required>
+    <label for="quantity">数量：</label>
+    <div class="quantity-container">
+      <button type="button" onclick="decreaseQuantity()">－</button>
+      <input type="number" id="quantity" name="數量" value="1" min="1" max="9" />
+      <button type="button" onclick="increaseQuantity()">＋</button>
+    </div>
 
-    <label>お名前（宛名）：</label>
-    <input name="entry.2222222222">
+    <label for="name">お名前（宛名）：</label>
+    <input type="text" id="name" name="收件人" required />
 
-    <label>電話番号：</label>
-    <input name="entry.3333333333">
+    <label for="phone">電話番号：</label>
+    <input type="text" id="phone" name="電話" />
 
-    <label>郵便番号：</label>
-    <input name="entry.4444444444">
+    <label for="zipcode">郵便番号：</label>
+    <input type="text" id="zipcode" name="郵遞區號" />
 
-    <label>住所：</label>
-    <input name="entry.5555555555">
+    <label for="address">住所：</label>
+    <input type="text" id="address" name="地址" />
 
-    <label>配送方法：</label>
-    <select name="entry.6666666666" required>
+    <label for="delivery">配送方法：</label>
+    <select id="delivery" name="配送方式">
+      <option value="宅急便">宅急便</option>
       <option value="日本郵便">日本郵便</option>
-      <option value="黑猫">黑猫</option>
       <option value="東京または埼玉で手渡し">東京または埼玉で手渡し</option>
     </select>
 
-    <label>支払方法：</label>
-    <select name="entry.7777777777" required>
-      <option value="現金">現金</option>
-      <option value="PayPay">PayPay</option>
-      <option value="LINE Pay">LINE Pay</option>
+    <label for="payment">支払い方法：</label>
+    <select id="payment" name="付款方式">
+      <option value="振り込み">振り込み</option>
+      <option value="東京または埼玉で手渡し">東京または埼玉で手渡し</option>
     </select>
 
-    <label>備考欄：</label>
-    <textarea name="entry.8888888888" rows="3"></textarea>
+    <label for="note">備考欄：</label>
+    <textarea id="note" name="備註"></textarea>
 
     <button type="submit">送信する</button>
   </form>
+
+  <script src="script.js"></script>
 </body>
 </html>
