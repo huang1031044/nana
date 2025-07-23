@@ -58,16 +58,6 @@
       margin-top: 30px;
       width: 100%;
     }
-    .radio-group {
-      display: flex;
-      gap: 20px;
-      margin-top: 10px;
-      font-size: 18px;
-    }
-    .radio-group input {
-      transform: scale(1.4);
-      margin-right: 6px;
-    }
   </style>
 </head>
 <body>
@@ -86,13 +76,13 @@
     <label>お名前</label>
     <input type="text" required>
 
-    <label>電話番号（任意）</label>
+    <label>電話番号</label>
     <input type="tel">
 
-    <label>郵便番号（任意）</label>
+    <label>郵便番号</label>
     <input type="text">
 
-    <label>住所（任意）</label>
+    <label>住所</label>
     <input type="text">
 
     <label>配送方法</label>
@@ -103,13 +93,13 @@
     </select>
 
     <label>支払い方法</label>
-    <div class="radio-group">
-      <label><input type="radio" name="pay" value="PayPay" checked> PayPay</label>
-      <label><input type="radio" name="pay" value="振り込み"> 振り込み</label>
-      <label><input type="radio" name="pay" value="現金"> 現金</label>
-    </div>
+    <select required>
+      <option value="PayPay">PayPay</option>
+      <option value="振り込み">振り込み</option>
+      <option value="現金">現金</option>
+    </select>
 
-    <label>備考（任意）</label>
+    <label>備考</label>
     <textarea rows="4"></textarea>
 
     <button class="submit-btn" type="submit">送信</button>
