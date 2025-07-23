@@ -1,13 +1,13 @@
 body {
-  font-family: "Arial", sans-serif;
-  max-width: 480px;
-  margin: 30px auto;
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 40px auto;
   padding: 20px;
-  background-color: #fefefe;
+  background-color: #fff;
   color: #333;
 }
 
-h2 {
+h1 {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -15,26 +15,48 @@ h2 {
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
-input, select, button {
+label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input, select {
   padding: 8px;
   font-size: 16px;
-  border-radius: 5px;
+  margin-top: 5px;
   border: 1px solid #ccc;
-  box-sizing: border-box;
+  border-radius: 4px;
 }
 
-.quantity-group {
+.quantity-field {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.quantity-group button {
-  width: 36px;
-  height: 36px;
+.quantity-field input[type=number] {
+  width: 60px;
+  text-align: center;
+}
+
+button[type=button] {
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+button[type=submit] {
+  margin-top: 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
   font-size: 18px;
-  font-weight: bold;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type=submit]:hover {
+  background-color: #0056b3;
 }
