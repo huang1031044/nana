@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>老黃在日雜貨店 接單表單</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .small-qty-input {
+      width: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <form id="orderForm">
+    <label>商品名、また商品番号：</label><br />
+    <input type="text" name="product" required /><br />
+
+    <label>数量：</label><br />
+    <button type="button" onclick="adjustQuantity(-1)">－</button>
+    <input type="number" name="quantity" id="quantity" value="1" class="small-qty-input" />
+    <button type="button" onclick="adjustQuantity(1)">＋</button><br />
+
+    <label>お名前（宛名）：</label><br />
+    <input type="text" name="name" /><br />
+
+    <label>電話番号：</label><br />
+    <input type="text" name="phone" /><br />
+
+    <label>郵便番号：</label><br />
+    <input type="text" name="zipcode" /><br />
+
+    <label>住所：</label><br />
+    <input type="text" name="address" /><br />
+
+    <label>配送方法：</label><br />
+    <select name="delivery">
+      <option value="日本郵便">日本郵便</option>
+      <option value="宅急便">宅急便</option>
+      <option value="東京または埼玉で手渡し">東京または埼玉で手渡し</option>
+    </select><br />
+
+    <label>備考：</label><br />
+    <textarea name="remarks"></textarea><br />
+
+    <button type="submit">送信する</button>
+  </form>
+
+  <script>
+    function adjustQuantity(amount) {
+      const qtyInput = document.getElementById("quantity");
+      let value = parseInt(qtyInput.value || "0") + amount;
+      if (value < 1) value = 1;
+      if (value > 9) value = 9;
+      qtyInput.value = value;
+    }
+  </script>
+</body>
+</html>
