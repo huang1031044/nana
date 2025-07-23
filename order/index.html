@@ -2,58 +2,122 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>黄の雑貨店注文書</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f8f8f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 480px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h1 {
+      font-size: 24px;
+      text-align: center;
+    }
+    form > div {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .quantity-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .quantity-box button {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      font-weight: bold;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+    .quantity-box input[type="number"] {
+      width: 60px;
+      text-align: center;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>📦 黄の雑貨店注文書</h1>
-
-    <form id="order-form">
-      <label for="item">商品名、また商品番号：</label>
-      <input type="text" id="item" name="item" required />
-
-      <label for="quantity">数量：</label>
-      <div class="quantity-wrapper">
-        <button type="button" onclick="changeQuantity(-1)">－</button>
-        <input type="number" id="quantity" name="quantity" min="1" value="1" />
-        <button type="button" onclick="changeQuantity(1)">＋</button>
+    <form>
+      <div>
+        <label>商品名、また商品番号：</label>
+        <input type="text" name="product" required>
       </div>
-
-      <label for="name">お名前（宛名）：</label>
-      <input type="text" id="name" name="name" required />
-
-      <label for="phone">電話番号：</label>
-      <input type="text" id="phone" name="phone" />
-
-      <label for="zipcode">郵便番号：</label>
-      <input type="text" id="zipcode" name="zipcode" />
-
-      <label for="address">住所：</label>
-      <input type="text" id="address" name="address" />
-
-      <label for="delivery">配送方法：</label>
-      <select id="delivery" name="delivery" required>
-        <option value="手渡し">東京また埼玉で手渡</option>
-        <option value="日本郵便">日本郵便</option>
-        <option value="宅急便">宅急便</option>
-      </select>
-
-      <label for="payment">支払い方法：</label>
-      <select id="payment" name="payment" required>
-        <option value="PayPay">PayPay</option>
-        <option value="振り込み">振り込み</option>
-        <option value="現金">現金</option>
-      </select>
-
-      <label for="note">備考欄：</label>
-      <textarea id="note" name="note" rows="3"></textarea>
-
-      <button type="submit">送信する</button>
+      <div>
+        <label>数量：</label>
+        <div class="quantity-box">
+          <button type="button" onclick="changeQty(-1)">－</button>
+          <input type="number" id="quantity" value="1" min="1" max="9" readonly>
+          <button type="button" onclick="changeQty(1)">＋</button>
+        </div>
+      </div>
+      <div>
+        <label>お名前（宛名）：</label>
+        <input type="text" name="name" required>
+      </div>
+      <div>
+        <label>電話番号：</label>
+        <input type="tel" name="phone">
+      </div>
+      <div>
+        <label>郵便番号：</label>
+        <input type="text" name="zipcode">
+      </div>
+      <div>
+        <label>住所：</label>
+        <input type="text" name="address">
+      </div>
+      <div>
+        <label>配送方法：</label>
+        <select name="delivery">
+          <option>東京また埼玉で手渡</option>
+          <option>日本郵便</option>
+          <option>ヤマト宅急便</option>
+        </select>
+      </div>
+      <div>
+        <label>備考：</label>
+        <input type="text" name="note">
+      </div>
+      <button type="submit">送信</button>
     </form>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    function changeQty(delta) {
+      const input = document.getElementById("quantity");
+      let val = parseInt(input.value);
+      val += delta;
+      if (val < 1) val = 1;
+      if (val > 9) val = 9;
+      input.value = val;
+    }
+  </script>
 </body>
 </html>
