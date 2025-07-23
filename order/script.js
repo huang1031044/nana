@@ -1,37 +1,33 @@
 emailjs.init("AoXLN9FqsrfZkmmKr"); // 你的 Public Key
 
-document.getElementById("orderForm").addEventListener("submit", function (e) {
+document.getElementById("order-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const form = e.target;
-
-  const templateParams = {
-    product: form.product.value,
-    quantity: form.quantity.value,
-    name: form.name.value,
-    phone: form.phone.value,
-    zipcode: form.zipcode.value,
-    address: form.address.value,
-    delivery: form.delivery.value,
-    payment: form.payment.value,
-    note: form.note.value,
-  };
-
-  emailjs.send("service_nbs0ejc", "template_d6a5onc", templateParams)
-    .then(function () {
-      alert("送信成功しました！");
-      form.reset();
-      form.quantity.value = 1;
-    }, function (error) {
-      alert("送信に失敗しました：" + JSON.stringify(error));
-    });
+  emailjs.send("service_nbs0ejc", "template_d6a5onc", {
+    product: this.product.value,
+    quantity: this.quantity.value,
+    name: this.name.value,
+    phone: this.phone.value,
+    zipcode: this.zipcode.value,
+    address: this.address.value,
+    delivery: this.delivery.value,
+    payment: this.payment.value,
+    note: this.note.value,
+  })
+  .then(() => {
+    alert("送信成功しました！");
+    this.reset();
+    document.getElementById("quantity").value = "1";
+  })
+  .catch((error) => {
+    alert("送信に失敗しました：" + error.text);
+  });
 });
 
-function changeQuantity(amount) {
-  const qtyInput = document.querySelector('input[name="quantity"]');
-  let current = parseInt(qtyInput.value);
-  if (!isNaN(current)) {
-    const newQty = Math.min(9, Math.max(1, current + amount));
-    qtyInput.value = newQty;
+function changeQuantity(change) {
+  const input = document.getElementById("quantity");
+  let value = parseInt(input.value) + change;
+  if (value >= 1 && value <= 9) {
+    input.value = value;
   }
 }
