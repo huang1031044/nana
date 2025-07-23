@@ -3,55 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>老黃在日雜貨店 接單表單</title>
+  <title>黄の雑貨店注文書</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <form id="order-form">
-    <h2>📦 老黃在日雜貨店 接單表單</h2>
+  <div class="container">
+    <h1>📦 黄の雑貨店注文書</h1>
 
-    <label for="product">商品名、また商品番号：</label>
-    <input type="text" id="product" name="商品名" required />
+    <form id="order-form">
+      <label for="item">商品名、また商品番号：</label>
+      <input type="text" id="item" name="item" required />
 
-    <label for="quantity">数量：</label>
-    <div class="quantity-container">
-      <button type="button" onclick="decreaseQuantity()">－</button>
-      <input type="number" id="quantity" name="數量" value="1" min="1" max="9" />
-      <button type="button" onclick="increaseQuantity()">＋</button>
-    </div>
+      <label for="quantity">数量：</label>
+      <div class="quantity-wrapper">
+        <button type="button" onclick="changeQuantity(-1)">－</button>
+        <input type="number" id="quantity" name="quantity" min="1" value="1" />
+        <button type="button" onclick="changeQuantity(1)">＋</button>
+      </div>
 
-    <label for="name">お名前（宛名）：</label>
-    <input type="text" id="name" name="收件人" required />
+      <label for="name">お名前（宛名）：</label>
+      <input type="text" id="name" name="name" required />
 
-    <label for="phone">電話番号：</label>
-    <input type="text" id="phone" name="電話" />
+      <label for="phone">電話番号：</label>
+      <input type="text" id="phone" name="phone" />
 
-    <label for="zipcode">郵便番号：</label>
-    <input type="text" id="zipcode" name="郵遞區號" />
+      <label for="zipcode">郵便番号：</label>
+      <input type="text" id="zipcode" name="zipcode" />
 
-    <label for="address">住所：</label>
-    <input type="text" id="address" name="地址" />
+      <label for="address">住所：</label>
+      <input type="text" id="address" name="address" />
 
-    <label for="delivery">配送方法：</label>
-<select id="delivery" name="配送方式">
-  <option value="東京または埼玉で手渡し">東京または埼玉で手渡し</option>
-  <option value="宅急便">宅急便</option>
-  <option value="日本郵便">日本郵便</option>
-</select>
+      <label for="delivery">配送方法：</label>
+      <select id="delivery" name="delivery" required>
+        <option value="手渡し">東京また埼玉で手渡</option>
+        <option value="日本郵便">日本郵便</option>
+        <option value="宅急便">宅急便</option>
+      </select>
 
-<label for="payment">支払い方法：</label>
-<select id="payment" name="付款方式">
-  <option value="PayPay">PayPay</option>
-  <option value="振り込み">振り込み</option>
-  <option value="東京または埼玉で手渡し">東京または埼玉で手渡し</option>
-</select>
+      <label for="payment">支払い方法：</label>
+      <select id="payment" name="payment" required>
+        <option value="PayPay">PayPay</option>
+        <option value="振り込み">振り込み</option>
+        <option value="現金">現金</option>
+      </select>
 
+      <label for="note">備考欄：</label>
+      <textarea id="note" name="note" rows="3"></textarea>
 
-    <label for="note">備考欄：</label>
-    <textarea id="note" name="備註"></textarea>
-
-    <button type="submit">送信する</button>
-  </form>
+      <button type="submit">送信する</button>
+    </form>
+  </div>
 
   <script src="script.js"></script>
 </body>
