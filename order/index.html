@@ -5,119 +5,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>老黃接單表單</title>
-  <style>
-    body {
-      background: #f9f9f9;
-      font-family: "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 480px;
-      margin: 30px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #333;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      color: #555;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-    .qty-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .qty-container button {
-      width: 30px;
-      height: 30px;
-      font-size: 16px;
-    }
-    .submit-button {
-      background-color: #007bff;
-      color: white;
-      padding: 12px;
-      margin-top: 20px;
-      border: none;
-      border-radius: 6px;
-      width: 100%;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .submit-button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h2>老黃接單表單</h2>
-    <form>
-      <label for="product">1. 商品名稱（請輸入編號＋名稱）</label>
-      <input type="text" id="product" name="product" required>
-
-      <label for="quantity">2. 數量</label>
-      <div class="qty-container">
-        <button type="button" onclick="changeQty(-1)">−</button>
-        <input type="number" id="quantity" name="quantity" min="1" value="1" readonly>
-        <button type="button" onclick="changeQty(1)">＋</button>
-      </div>
-
-      <label for="name">3. 收件人姓名（請用日文全名）</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="contact">4. 連絡方式（LINE ID 或 電話）</label>
-      <input type="text" id="contact" name="contact" required>
-
-      <label for="zip">5. 郵便番号（例：123-4567）</label>
-      <input type="text" id="zip" name="zip" required>
-
-      <label for="address">6. 地址</label>
-      <input type="text" id="address" name="address" required>
-
-      <label for="delivery">7. 配送方法</label>
-      <select id="delivery" name="delivery">
-        <option value="黑貓宅急便">黑貓宅急便</option>
-        <option value="日本郵便">日本郵便</option>
-        <option value="自取">自取</option>
+  <h2>📦 老黃在日雜貨店 接單表單</h2>
+  <form id="orderForm">
+    <label>商品名稱（含編號）：<input type="text" name="item" required /></label><br/>
+    <label>數量：
+      <button type="button" onclick="adjustQty(-1)">－</button>
+      <input type="number" name="qty" id="qty" value="1" min="1" max="9" required />
+      <button type="button" onclick="adjustQty(1)">＋</button>
+    </label><br/>
+    <label>郵遞區號：<input type="text" name="zipcode" required /></label><br/>
+    <label>地址：<input type="text" name="address" required /></label><br/>
+    <label>收件人姓名：<input type="text" name="name" required /></label><br/>
+    <label>電話：<input type="text" name="phone" required /></label><br/>
+    <label>配送方式：
+      <select name="delivery">
+        <option value="黑貓宅配">黑貓宅配</option>
+        <option value="郵局配送">郵局配送</option>
+        <option value="東京或埼玉自取">東京或埼玉自取</option>
       </select>
-
-      <label for="payment">8. 支付方法</label>
-      <select id="payment" name="payment">
-        <option value="現金">現金</option>
-        <option value="銀行轉帳">銀行轉帳</option>
-        <option value="Line Pay">Line Pay</option>
-        <option value="PayPay">PayPay</option>
+    </label><br/>
+    <label>付款方式：
+      <select name="payment">
+        <option value="轉帳">轉帳</option>
+        <option value="現場付款">現場付款</option>
       </select>
+    </label><br/>
+    <label>備註：<textarea name="note" rows="3"></textarea></label><br/>
+    <button type="submit">送出訂單</button>
+  </form>
+  <p id="responseMsg"></p>
 
-      <label for="notes">9. 備註</label>
-      <textarea id="notes" name="notes" rows="3"></textarea>
-
-      <button type="submit" class="submit-button">送出表單</button>
-    </form>
-  </div>
-  <script>
-    function changeQty(num) {
-      var qty = document.getElementById("quantity");
-      var value = parseInt(qty.value);
-      if (value + num >= 1) qty.value = value + num;
-    }
-  </script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
