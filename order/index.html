@@ -1,123 +1,57 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>黄の雑貨店注文書</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f8f8f8;
-      padding: 20px;
-    }
-    .container {
-      max-width: 480px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    h1 {
-      font-size: 24px;
-      text-align: center;
-    }
-    form > div {
-      margin-bottom: 15px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      font-size: 16px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .quantity-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .quantity-box button {
-      width: 40px;
-      height: 40px;
-      font-size: 20px;
-      font-weight: bold;
-      border: 1px solid #aaa;
-      border-radius: 5px;
-      background-color: #f0f0f0;
-      cursor: pointer;
-    }
-    .quantity-box input[type="number"] {
-      width: 60px;
-      text-align: center;
-      font-size: 18px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>📦 黄の雑貨店注文書</h1>
-    <form>
-      <div>
-        <label>商品名、また商品番号：</label>
-        <input type="text" name="product" required>
-      </div>
-      <div>
-        <label>数量：</label>
-        <div class="quantity-box">
-          <button type="button" onclick="changeQty(-1)">－</button>
-          <input type="number" id="quantity" value="1" min="1" max="9" readonly>
-          <button type="button" onclick="changeQty(1)">＋</button>
-        </div>
-      </div>
-      <div>
-        <label>お名前（宛名）：</label>
-        <input type="text" name="name" required>
-      </div>
-      <div>
-        <label>電話番号：</label>
-        <input type="tel" name="phone">
-      </div>
-      <div>
-        <label>郵便番号：</label>
-        <input type="text" name="zipcode">
-      </div>
-      <div>
-        <label>住所：</label>
-        <input type="text" name="address">
-      </div>
-      <div>
-        <label>配送方法：</label>
-        <select name="delivery">
-          <option>東京また埼玉で手渡</option>
-          <option>日本郵便</option>
-          <option>ヤマト宅急便</option>
-        </select>
-      </div>
-      <div>
-        <label>備考：</label>
-        <input type="text" name="note">
-      </div>
-      <button type="submit">送信</button>
-    </form>
-  </div>
+<h2 style="text-align:center;">黄の雑貨店注文書</h2>
+<form id="order-form" style="max-width:600px;margin:auto;">
+  <label>商品名また商品番号</label><br>
+  <input type="text" name="item" required><br><br>
 
-  <script>
-    function changeQty(delta) {
-      const input = document.getElementById("quantity");
-      let val = parseInt(input.value);
-      val += delta;
-      if (val < 1) val = 1;
-      if (val > 9) val = 9;
-      input.value = val;
+  <label>数量</label><br>
+  <div style="display:flex;align-items:center;gap:10px;width:120px;">
+    <button type="button" onclick="changeQty(-1)">－</button>
+    <input type="number" id="qty" name="qty" min="1" max="9" value="1" style="text-align:center;width:50px;">
+    <button type="button" onclick="changeQty(1)">＋</button>
+  </div><br>
+
+  <label>お名前</label><br>
+  <input type="text" name="name" required><br><br>
+
+  <label>電話番号（任意）</label><br>
+  <input type="tel" name="tel"><br><br>
+
+  <label>郵便番号（任意）</label><br>
+  <input type="text" name="zip"><br><br>
+
+  <label>住所（任意）</label><br>
+  <input type="text" name="address"><br><br>
+
+  <label>配送方法</label><br>
+  <select name="delivery">
+    <option value="東京また埼玉で手渡">東京また埼玉で手渡</option>
+    <option value="宅急便">宅急便</option>
+  </select><br><br>
+
+  <label>支払い方法</label><br>
+  <select name="payment">
+    <option value="PayPay">PayPay</option>
+    <option value="振り込み">振り込み</option>
+  </select><br><br>
+
+  <label>備考（任意）</label><br>
+  <textarea name="note" rows="3" style="width:100%;"></textarea><br><br>
+
+  <button type="submit" style="font-size:18px;padding:10px 20px;">送信</button>
+</form>
+
+<script>
+  function changeQty(n) {
+    const qty = document.getElementById("qty");
+    let value = parseInt(qty.value) + n;
+    if (value >= 1 && value <= 9) {
+      qty.value = value;
     }
-  </script>
-</body>
-</html>
+  }
+
+  document.getElementById("order-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("送信完了しました（テスト用）");
+    // 若有串接 Google Form 或 EmailJS，可在這裡加上送出邏輯
+  });
+</script>
